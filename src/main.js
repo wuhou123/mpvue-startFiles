@@ -32,7 +32,7 @@ export default {
       backgroundColor: '#fff',
       list: [
         {
-          text: '料到',
+          text: '发现啦',
           pagePath: 'pages/home/main',
           iconPath: 'static/images/tab_home@2x.png',
           selectedIconPath: 'static/images/tab_lighthome2.png'

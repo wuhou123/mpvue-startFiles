@@ -51,7 +51,7 @@ export const request = function(method,url,params,isShowLoading = true) {
         // 因为hide会让showToast隐藏
         isShowLoading && wx.hideLoading && wx.hideLoading()
         wx.showToast({
-          title: '网络请求失败',
+          title: '出错了',
           icon: 'error',
           duration: 1000
         })

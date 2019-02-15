@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "skeletons": "/static/components/skeletons/index"
+  }
+}

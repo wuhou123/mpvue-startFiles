@@ -1,6 +1,6 @@
 # mpvue-start
 
-> mpvue 脚手架文件，方便快速生成一个带vuex、富文本转换wx-parse的微信小程序开发项目模板！
+> mpvue 脚手架文件，方便快速生成一个带vuex、富文本转换wx-parse，骨架屏，方便引入第三方ui的微信小程序开发项目模板！
 
 ## Build Setup
 

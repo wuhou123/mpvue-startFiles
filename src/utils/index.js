@@ -17,63 +17,57 @@ export function formatTime (date) {
 
   return `${t1} ${t2}`
 }
-
-//request
-export const request = function(method,url,params,isShowLoading = true) {
-  // 加密
-  // console.log(method, requestHandler, isShowLoading = true)
-  // let params = requestHandler.params
-  isShowLoading && wx.showLoading && wx.showLoading({title: '加载中...'})
+// request 请求
+export const netRequest = function (method, url, params, isShowLoading = true) {
+  isShowLoading && wx.showLoading && wx.showLoading({ title: '加载中...' })
   return new Promise((resolve, reject) => {
-    let appid,accessToken;
-    //登录不带appid&accessToken
-    if(url.includes('/wxxcx/login.do')){
-      appid = ''
-      accessToken = ''
-    }else{
-      appid = wx.getStorageSync('vuex') ? JSON.parse(wx.getStorageSync('vuex')).loginMsg.appid:''
-      accessToken = wx.getStorageSync('vuex') ? JSON.parse(wx.getStorageSync('vuex')).loginMsg.token:''
+    // 拦截及token处理
+    let accessToken
+    if (url.includes('/wxxcx/login.do')) accessToken = ''
+    else {
+      accessToken = wx.getStorageSync('vuex')
+        ? JSON.parse(wx.getStorageSync('vuex')).loginMsg.token
+        : ''
     }
     wx.request({
-      url:url,
+      url: url,
       data: params,
-      method: method, // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      method: method,
       header: {
-        'Content-Type': method === 'POST' ? 'application/x-www-form-urlencoded' : 'application/json',
-        appid: appid,
-        accessToken: accessToken 
+        'Content-Type':
+          method === 'POST'
+            ? 'application/x-www-form-urlencoded'
+            : 'application/json',
+        accessToken: accessToken
       },
       success: function (res) {
         isShowLoading && wx.hideLoading && wx.hideLoading()
-        resolve(res)        
+        resolve(res)
       },
       fail: function (err) {
-        // 因为hide会让showToast隐藏
         isShowLoading && wx.hideLoading && wx.hideLoading()
         wx.showToast({
-          title: '出错了',
-          icon: 'error',
-          duration: 1000
+          title: '网络出错了,请重试',
+          icon: 'error'
         })
         reject(err)
-        // throw new Error('Network request failed')
       },
-      complete: function () {
-      }
+      complete: function () {}
     })
   })
-
 }
-
-export const GET = function(url,params){
-  return request('GET',url,params)
-}
-
-export const POST = function(url,params){
-  return request('POST',url,params)
+// OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+export const request = {
+  get (url, params) {
+    return netRequest('GET', url, params)
+  },
+  post (url, params) {
+    return netRequest('POST', url, params)
+  }
 }
 
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  request
 }

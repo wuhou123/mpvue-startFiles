@@ -1,7 +1,4 @@
 const state = {
-    openId : '',
-    code:'',
-    userInfo:{},
-    loginMsg:{}
+  count: 0
 }
 export default state
